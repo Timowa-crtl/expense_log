@@ -1,6 +1,7 @@
 # Expense Log 2.0
 
 **The continuation of the beloved Android App Expense Log** 
+
 The original app is no longer maintained; this one picks up where it left off. Your records come with you.
 
 <p>
