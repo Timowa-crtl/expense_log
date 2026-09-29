@@ -4,6 +4,8 @@
 /local.properties
 /build
 /captures
+# Android Studio's "Generate Signed App Bundle / APK" output (APK/AAB and mapping.txt)
+/mobile/release/
 .externalNativeBuild
 .cxx
 
