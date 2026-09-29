@@ -30,13 +30,12 @@ original work in this repository, not the components listed below.
      android-iconify-material-community.ttf - Material Design Icons 1.2.65,
        by the MDI contributors - SIL OFL 1.1, https://materialdesignicons.com
 
-2. Bundled JARs in mobile/libs/ (REMOVED from this copy - see README.md)
+2. Bundled JARs in the original snapshot's mobile/libs/ (NOT included in this
+   repository; they were unreferenced and have been dropped)
    httpmime-4.0.3.jar — Apache HttpComponents,
      Copyright (c) The Apache Software Foundation — Apache License 2.0
    json_simple-1.1.jar — json-simple,
      Copyright (c) Yidong Fang — Apache License 2.0
-   (Both are currently unreferenced; the fileTree() dependency in
-   mobile/build.gradle is commented out.)
 
 Runtime dependencies resolved by Gradle (AndroidX, Material Components,
 Dagger, AndroidPlot, Dropbox Core SDK) are not redistributed here and remain

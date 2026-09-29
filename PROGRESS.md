@@ -10,7 +10,7 @@ everything merged before it — has run on both physical phones against real rec
 on a debug build.**
 
 This is the live document. `CLAUDE.md` holds the constraints that still bind when changing code;
-`README.md` holds the handover terms and what a builder must supply. The detailed phase plans are
+`README.md` is the public face of the app; `BUILDING.md` holds what a builder must supply. The detailed phase plans are
 archived under [`docs/history/`](docs/history/) — history, not instructions.
 
 | | |

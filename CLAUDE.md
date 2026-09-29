@@ -17,8 +17,9 @@ deprecated API the app used. `:mobile:bundleRelease` produces a signed, R8-shrun
 `docs/history/REVIVAL_PLAN.md` is the authoritative record of that work — the exact toolchain versions, the
 dependency decisions (including which upgrades are deliberately *deferred* because they break the
 app), the step order, what each gate actually produced, and a list of what Phase 2 must still
-cover. **Read it before changing any build file, manifest, or dependency.** `README.md` covers the
-handover terms, the toolchain a builder needs, and the credentials they must supply.
+cover. **Read it before changing any build file, manifest, or dependency.** `README.md` is the
+public face of the app, aimed at users of the original; `BUILDING.md` covers the toolchain a
+builder needs and the credentials they must supply.
 
 Toolchain, all verified together: Gradle 9.7.1, AGP 9.4.0, JDK 21, compileSdk 36, minSdk 26,
 **targetSdk 36**, Java 17 source/target. Phase 2 (`rehabilitation` branch) raised targetSdk from 29
