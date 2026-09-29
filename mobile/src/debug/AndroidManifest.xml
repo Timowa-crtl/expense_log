@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Debug-variant manifest. It is merged into the debug APK only, so nothing declared here can reach
+  a release build. It holds two test hosts: DialogHostActivity, which gives SyncConflictDialogTest
+  somewhere to attach a dialog, and BackStackHostActivity, which gives BackNavigationTest a
+  fragment container.
+
+  It has to live in the app APK rather than in src/androidTest. An activity declared in the test
+  manifest belongs to the test package (de.timowa.expenselog.test) and runs in that process, and
+  instrumentation targeting the app refuses to launch it: "Intent in process de.timowa.expenselog
+  resolved to different process de.timowa.expenselog.test". The debug variant is the usual place
+  for a test-only activity for exactly that reason.
+
+  Launching one of the app's real activities instead would build the Dagger graph and open the
+  live database, which on the maintainer's phone is real financial data. See IsolatedDatabaseContext.
+
+  DialogHostActivity's exported="true" is so that "adb shell am start" can bring it up to preview
+  the conflict dialog (see the class comment). It carries no intent filter, is not in the launcher, holds no data, and
+  exists only in the debug APK.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity
+            android:name="de.timowa.expenselog.dropbox.DialogHostActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="de.timowa.expenselog.BackStackHostActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme" />
+    </application>
+
+</manifest>

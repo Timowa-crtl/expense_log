@@ -1,0 +1,43 @@
+Expense Log
+
+Copyright 2021 Andrew Rodrigues
+Copyright 2026 Timowa
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+The 2021 copyright is the original author's and is retained as Apache-2.0 s.4
+requires. The 2026 line covers the revival work: the build modernisation, the
+removal of billing, ads and telemetry, the scoped-storage and notification
+rewrites, and the move off the original author's package namespace. The
+"AR Productions" identity and the original Play listing are not part of the
+licence grant and are not used by this build.
+
+------------------------------------------------------------------------
+This product includes third-party code that is licensed separately by its
+respective copyright holders. The Apache-2.0 grant above covers only the
+original work in this repository, not the components listed below.
+
+1. Vendored icon fonts and drawable, in mobile/src/main/java/de/timowa/expenselog/icons/
+   and mobile/src/main/assets/icons/
+   Taken from android-iconify 2.2.2, Copyright (c) Joan Zapata - Apache License 2.0.
+   The library was last published in 2016 and compiled against the old Android support
+   library; its five classes and three icon fonts are carried here instead, because
+   category icons are stored in user databases as that project's font keys.
+   The fonts themselves are third-party:
+     android-iconify-fontawesome.ttf - Font Awesome 4.4 by Dave Gandy,
+       font under SIL OFL 1.1, https://fontawesome.com
+     android-iconify-material.ttf - Material Icons 2.0 by Google - Apache License 2.0
+     android-iconify-material-community.ttf - Material Design Icons 1.2.65,
+       by the MDI contributors - SIL OFL 1.1, https://materialdesignicons.com
+
+2. Bundled JARs in mobile/libs/ (REMOVED from this copy - see README.md)
+   httpmime-4.0.3.jar — Apache HttpComponents,
+     Copyright (c) The Apache Software Foundation — Apache License 2.0
+   json_simple-1.1.jar — json-simple,
+     Copyright (c) Yidong Fang — Apache License 2.0
+   (Both are currently unreferenced; the fileTree() dependency in
+   mobile/build.gradle is commented out.)
+
+Runtime dependencies resolved by Gradle (AndroidX, Material Components,
+Dagger, AndroidPlot, Dropbox Core SDK) are not redistributed here and remain
+under their own licenses.

@@ -1,0 +1,17 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <GridView
+        android:id="@+id/gridView_calendar"
+        style="@style/max_layout_width"
+        android:layout_height="match_parent"
+        android:layout_margin="6dp"
+        android:choiceMode="singleChoice"
+        android:drawSelectorOnTop="true"
+        android:horizontalSpacing="@dimen/calendar_item_spacing"
+        android:numColumns="7"
+        android:verticalSpacing="@dimen/calendar_item_spacing" />
+</RelativeLayout>

@@ -1,0 +1,56 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
+         dismiss it. -->
+    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+    <ListPreference
+        android:defaultValue="@string/default_date_format"
+        android:entries="@array/pref_date_format_options"
+        android:entryValues="@array/pref_date_format_values"
+        android:key="@string/pref_key_date_format"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_date_format" />
+    <ListPreference
+        android:defaultValue="@string/default_time_format"
+        android:entries="@array/pref_time_format_options"
+        android:entryValues="@array/pref_time_format_values"
+        android:key="@string/pref_key_time_format"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_time_format" />
+    <ListPreference
+        android:defaultValue="@string/default_first_day_of_week"
+        android:entries="@array/pref_first_day_of_week_options"
+        android:entryValues="@array/pref_first_day_of_week_values"
+        android:key="@string/pref_key_first_day_of_week"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_first_day_of_week" />
+
+    <ListPreference
+        android:defaultValue="0"
+        android:entries="@array/starting_screen_options"
+        android:entryValues="@array/pref_starting_screen_values"
+        android:key="@string/pref_key_starting_screen"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/starting_screen" />
+
+    <ListPreference
+        android:defaultValue="2"
+        android:entries="@array/starting_screen_options"
+        android:entryValues="@array/pref_starting_screen_values"
+        android:key="@string/pref_key_after_new_log_screen"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/screen_after_new_record" />
+    <ListPreference
+        android:defaultValue="@string/default_string"
+        android:entries="@array/currencyCodes"
+        android:entryValues="@array/currencyCodes"
+        android:key="@string/pref_key_currency"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_currency" />
+</PreferenceScreen>

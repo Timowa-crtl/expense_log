@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The reminder settings. These used to be a nested <PreferenceScreen> inside pref_general.xml,
+     which the legacy framework opens as a bare Dialog: no toolbar, no title, and no window insets,
+     so under edge-to-edge the first row was drawn behind the status bar. A fragment of its own is
+     a real screen, so it gets the toolbar and the insets every other settings screen gets. -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreferenceCompat
+        android:defaultValue="@bool/default_reminder_enable"
+        android:key="@string/pref_key_reminder_enable"
+        android:summary="@string/reminder_enable_summary"
+        android:title="@string/reminder_enable" />
+
+    <ListPreference
+        android:defaultValue="@string/default_reminder_frequency"
+        android:dependency="@string/pref_key_reminder_enable"
+        android:dialogTitle="@string/reminder_frequency"
+        android:entries="@array/reminder_frequency_array"
+        android:entryValues="@array/reminder_frequency_values"
+        android:key="@string/pref_key_reminder_frequency"
+        android:title="@string/reminder_frequency" />
+
+    <de.timowa.expenselog.reminders.TimePreference
+        android:dependency="@string/pref_key_reminder_enable"
+        android:key="@string/pref_key_reminder_time"
+        android:title="@string/reminder_time" />
+
+</PreferenceScreen>

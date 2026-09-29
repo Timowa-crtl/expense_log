@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The collapsed marker beside each filter group. Traced from the 32dp PNG it replaces: the
+    viewport is that PNG's 96x96 pixel grid, so the chevron keeps its size and padding exactly.
+    FilterDialogFragment sets it with setCompoundDrawablesWithIntrinsicBounds, which renders a
+    drawable at its intrinsic size, so the 32dp here is load-bearing.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp"
+    android:height="32dp"
+    android:viewportWidth="96"
+    android:viewportHeight="96">
+    <path
+        android:pathData="M34,38 L48,52 L62,38"
+        android:strokeAlpha="0.6"
+        android:strokeColor="#323232"
+        android:strokeLineCap="square"
+        android:strokeWidth="6" />
+</vector>

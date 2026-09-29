@@ -1,0 +1,156 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
+    <!--
+        No storage permissions. Since Step 4 the app writes only to its own directory
+        (Android/data/<package>/files, via FileHelper.getAppFilesDir) and reads user-chosen files
+        through the system document picker, which grants access per document. Neither needs a
+        permission at any API level.
+    -->
+
+    <!--Permission to start reminder service after restart-->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!--Required to post the reminder notification from API 33 (Android 13) on. This is a runtime
+        permission: declaring it is not enough, and without the grant notify() is a silent no-op:
+        no crash, no log, nothing. NotificationPermission owns the request; MainActivity and the
+        reminder toggle in SettingsActivity are the two places it is asked for.
+
+        No maxSdkVersion: the permission simply does not exist below 33, where the system ignores
+        the declaration and NotificationPermission.isGranted returns true unconditionally.-->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!--No <queries> element. There was one, declaring an ACTION_SEND + text/csv filter so that
+        SpreadsheetHelper could enumerate CSV share targets and grant each of them URI permission.
+        It never matched: that code called queryIntentActivities with the *chooser* intent, whose
+        action is ACTION_CHOOSER, so the filter did not apply and the grant loop granted to nothing.
+        Export worked regardless, because Intent.createChooser propagates
+        FLAG_GRANT_READ_URI_PERMISSION to whichever target the user picks. The loop is gone and so
+        is this declaration; if a future feature needs to enumerate other apps, it needs its own
+        <queries> entry matching the intent it actually queries with. Finding 9 of
+        docs/history/REVIEW_FINDINGS.md.
+
+        Moot twice over now: export no longer shares at all. It asks ACTION_CREATE_DOCUMENT where
+        the file should go, which is answered by the system picker rather than by other apps.-->
+
+    <!--No cloud backup and no device transfer, on every Android version. allowBackup="false"
+        covers Android 11 and below; Android 12 and above read dataExtractionRules instead, and
+        ignore allowBackup, so both have to say it. The database, the Dropbox credential and the
+        staged exports all stay on the device the user put them on; the app's own .edb export
+        is the way records move. The credential could not survive a transfer in any case: its key
+        lives in that device's Keystore.-->
+    <application
+        android:name="de.timowa.expenselog.MyLogApplication"
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!--File Import Filters that make  app available to import-->
+            <!--Register with File Explorers-->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!--content:// only. The file scheme was advertised here and MainActivity had a
+                    branch for it, but the app holds no storage permission since Phase 2 Step 4, so
+                    it cannot read the shared-storage path a file:// URI names. Claiming to handle
+                    such an intent and then refusing it is worse than not appearing in the chooser.
+                    See docs/history/RECOVERY_PLAN.md, Open items. The http and https filters that
+                    sat below this one went the same way: MainActivity refuses every non-content
+                    URI before it offers to import, so they only put the app in choosers it then
+                    backed out of.-->
+                <data android:scheme="content" />
+                <data android:mimeType="*/*" />
+                <data android:host="*" />
+                <data android:pathPattern=".*\\.edb" />
+                <data android:pathPattern=".*\\..*\\.edb" />
+            </intent-filter>
+
+            <!--Register with Gmail-->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="content" />
+                <data android:mimeType="application/octet-stream" />
+            </intent-filter>
+        </activity>
+        <!-- The settings screens supply their own Toolbar, as MainActivity does, so they need
+             the theme without a decor action bar: AppCompat throws "This Activity already has an
+             action bar supplied by the window decor" otherwise. They took the plain AppTheme while
+             they were PreferenceActivity subclasses, where an AppCompatDelegate managed it. -->
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/settings"
+            android:parentActivityName="de.timowa.expenselog.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".dropbox.BackupListActivity"
+            android:parentActivityName="de.timowa.expenselog.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AccountPreferencesActivity"
+            android:parentActivityName="de.timowa.expenselog.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <!--Start reminder manager on device boot up-->
+        <!-- exported="false" is correct here: BOOT_COMPLETED is a system broadcast and is
+             delivered to non-exported receivers, and the notification-action PendingIntents are
+             same-package sends. Exporting this receiver would let any co-installed app drive
+             onReceive's extras-dispatched actions. -->
+        <receiver
+            android:name="de.timowa.expenselog.reminders.ReminderReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Dropbox AuthActivity -->
+        <activity
+            android:name="com.dropbox.core.android.AuthActivity"
+            android:configChanges="orientation|keyboard"
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+
+                <!-- Insert your app key after “db-  ...” -->
+                <data android:scheme="@string/dropbox_key" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!--provider to share files-->
+        <provider
+            android:name=".GenericFileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+    </application>
+</manifest>

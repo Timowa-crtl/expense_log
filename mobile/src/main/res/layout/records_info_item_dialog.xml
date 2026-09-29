@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="false"
+    android:gravity="center_vertical"
+    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+    android:orientation="horizontal">
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dialog_row_spacing"
+        android:layout_marginTop="@dimen/dialog_row_spacing"
+        android:layout_weight="1"
+        android:background="@color/calendar_day_background"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/textView_dialog_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="date: dec 5, 2123 5:45pm"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:textColor="@color/darkText"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/textView_dialog_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="Account: books"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:textColor="@color/darkText"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/textView_dialog_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="category: books"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:textColor="@color/darkText"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/textView_dialog_notes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="notes: yadadada"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:textColor="@color/darkText"
+            tools:ignore="HardcodedText" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView_dialog_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dialog_row_spacing"
+        android:background="@color/calendar_day_background"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:text="$675"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        tools:ignore="HardcodedText" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/dialog_row_spacing"
+        android:layout_marginTop="@dimen/dialog_row_spacing"
+        android:background="@color/calendar_day_background"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="6dp">
+
+        <Button
+            android:id="@+id/button_update"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/menu_edit" />
+
+        <Button
+            android:id="@+id/button_delete"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/menu_delete" />
+    </LinearLayout>
+
+</LinearLayout>

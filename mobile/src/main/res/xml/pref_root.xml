@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The settings root: the list the user first sees.
+
+    This was pref_headers.xml, a <preference-headers> document that only PreferenceActivity can
+    read. AndroidX has no headers, so the root is an ordinary PreferenceScreen whose rows each name
+    the fragment they open in app:fragment; SettingsActivity.onPreferenceStartFragment swaps it in.
+    The titles, icons and order are unchanged, Reminders still a section of its own between
+    Preferences and Data & sync, and About still last.
+
+    app:fragment is resolved by name at tap time, exactly as android:fragment was, so a typo still
+    fails at tap rather than at build. SettingsHeadersTest resolves every one of them.
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+        android:icon="@drawable/ic_tune_black_24dp"
+        android:key="root_preferences"
+        android:title="@string/pref_header_preferences"
+        app:fragment="de.timowa.expenselog.SettingsActivity$GeneralPreferenceFragment" />
+
+    <!-- A section of its own rather than a row inside Preferences. The title is @string/reminders,
+         the same string the reminder notification's Settings action hands to
+         Navigator.openSettings, so the row and the screen it opens cannot drift apart. -->
+    <Preference
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:key="root_reminders"
+        android:title="@string/reminders"
+        app:fragment="de.timowa.expenselog.SettingsActivity$RemindersPreferenceFragment" />
+
+    <Preference
+        android:icon="@drawable/ic_sync_black_24dp"
+        android:key="root_data_sync"
+        android:title="@string/pref_header_data_sync"
+        app:fragment="de.timowa.expenselog.SettingsActivity$DataSyncPreferenceFragment" />
+
+    <Preference
+        android:icon="@drawable/ic_accounts_black_24dp"
+        android:key="root_accounts"
+        android:title="@string/pref_header_accounts"
+        app:fragment="de.timowa.expenselog.SettingsActivity$AccountSelectionPreferenceFragment" />
+
+    <!-- Last, by convention: a destination people look for deliberately and rarely. It is not a
+         PreferenceFragmentCompat, because it hosts a layout of its own; the host instantiates
+         whatever fragment a row names, so that costs nothing structurally. -->
+    <Preference
+        android:icon="@drawable/ic_info_black_24dp"
+        android:key="root_about"
+        android:title="@string/about"
+        app:fragment="de.timowa.expenselog.SettingsActivity$AboutFragment" />
+
+</PreferenceScreen>

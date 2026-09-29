@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#009688</color>
+    <color name="colorPrimaryDark">#00796B</color>
+    <color name="colorPrimaryLight">#B2DFDB</color>
+    <color name="colorAccent">#FFAA00</color>
+    <!--<color name="colorAccent">#FF9800</color>-->
+
+
+    <color name="darkText">#222222</color>
+    <color name="lightText">#777777</color>
+    <color name="expenseColor">#a50000</color>
+    <color name="incomeColor">#008c00</color>
+    <color name="expenseColorLight">#d80000</color>
+    <color name="incomeColorLight">#00bf00</color>
+    <color name="colorNavHeaderFade">#49b0a7</color>
+    <color name="actionBarWhite">#ECECEC</color>
+    <color name="menu_icon_color" type="id">#222222</color>
+    <!-- a series dialog choice: a neutral outline, and an icon coloured by how much the choice
+         deletes. No green anywhere: none of the three is safe. -->
+    <color name="scopeOptionOutline">#DADCDB</color>
+    <color name="scopeSeverityLow">#F9A825</color>
+    <color name="scopeSeverityMedium">#EF6C00</color>
+    <color name="scopeSeverityHigh">#C62828</color>
+    <color name="errorText">#C62828</color>
+    <color name="listItemSelected">#40009688</color>
+    <color name="newLogDivider">#19999999</color>
+
+    <!--Graph Colors-->
+    <color name="graph_over_line">#33999999</color>
+    <color name="graph_line">@color/colorAccent</color>
+    <color name="graph_vertices">@color/colorPrimary</color>
+    <color name="graph_background">@android:color/transparent</color>
+    <color name="graph_text">@color/darkText</color>
+
+    <!--Calendar Colors-->
+    <color name="calendar_day_background">#11999999</color>
+    <color name="calendar_day_date">#11999999</color>
+</resources>

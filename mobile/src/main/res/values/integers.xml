@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="expenseIncomeSwitchSmallText">20</integer>
+    <integer name="expenseIncomeSwitchLargeText">28</integer>
+    <integer name="expenseIncomeAnimationDuration">300</integer>
+    <integer name="new_log_label_column_weight">25</integer>
+    <integer name="new_log_value_column_weight">70</integer>
+</resources>

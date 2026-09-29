@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The launcher icon's own colours: the app's teal and amber, kept separate so a theme
+         change does not silently recolour the icon. -->
+    <color name="ic_launcher_background">#009688</color>
+    <color name="ic_launcher_symbol">#FFAA00</color>
+</resources>

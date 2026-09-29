@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The settings host. A plain AppCompatActivity layout, which is what replaced PreferenceActivity:
+    an AppBarLayout with the app's toolbar over a container the preference fragments are swapped
+    into.
+
+    android:fitsSystemWindows="true" on the CoordinatorLayout is what keeps this screen inset under
+    edge-to-edge, the job AppCompatPreferenceActivity used to do by hand. PreferenceActivity built
+    its own decor and left the content root behind the status bar, so the first row could not be
+    tapped on Android 15 and 16.
+-->
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <!--
+        fitsSystemWindows here, as well as on the CoordinatorLayout, is what paints the strip
+        behind the status bar: the AppBarLayout takes the top inset as padding and draws its own
+        background up into it, in colorPrimaryDark, with the toolbar's colorPrimary below. Without
+        it that strip is left unpainted and Android 15 and 16 draw white status icons on the
+        near-white window background, which is illegible. MainActivity does not need this because
+        its DrawerLayout paints the strip itself; these screens have no drawer.
+        android:statusBarColor cannot do the job: it is ignored from targetSdk 35 on.
+    -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimaryDark"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/settings_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
+        android:id="@+id/settings_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

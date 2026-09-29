@@ -1,0 +1,181 @@
+apply plugin: 'com.android.application'
+
+// The Dropbox app key is deliberately not in version control. It is not a secret -- with PKCE
+// there is no app secret, and the key ships in every APK, in res/values and in the manifest's
+// db-<key> redirect scheme. It is kept out of git so that a fork does not silently authenticate
+// as this app's Dropbox identity, and so there is exactly one place to set it.
+//
+// Put "dropbox.appKey=<your key>" in local.properties (gitignored), or set DROPBOX_APP_KEY in the
+// environment for a CI build. Without either, the build still succeeds and everything except
+// Dropbox works -- the fallback is a lowercase dud, because lint's AppLinkUrlError rejects an
+// upper-case URI scheme in the AuthActivity intent-filter.
+def dropboxAppKey = {
+    def props = new Properties()
+    def f = rootProject.file('local.properties')
+    if (f.exists()) {
+        f.withInputStream { props.load(it) }
+    }
+    return props.getProperty('dropbox.appKey')
+            ?: System.getenv('DROPBOX_APP_KEY')
+            ?: 'replace-with-your-dropbox-app-key'
+}()
+
+// The upload signing key, read the way the Dropbox key is: from a gitignored properties file, or
+// from the environment for a CI build. Absent, not failing, when there is neither -- a contributor
+// with no keystore must still be able to build and test the app; only a release build needs this.
+def signing = {
+    def props = new Properties()
+    def f = rootProject.file('keystore.properties')
+    if (f.exists()) {
+        f.withInputStream { props.load(it) }
+        // Without storeFile, rootProject.file(null) would throw at configuration and take the
+        // debug build down with the release one; treat an incomplete file as no signing instead.
+        if (!props.getProperty('storeFile')) {
+            logger.warn('keystore.properties has no storeFile; the release build will be unsigned.')
+            return null
+        }
+        return props
+    }
+    if (System.getenv('SIGNING_STORE_FILE')) {
+        props.setProperty('storeFile', System.getenv('SIGNING_STORE_FILE'))
+        props.setProperty('storePassword', System.getenv('SIGNING_STORE_PASSWORD') ?: '')
+        props.setProperty('keyAlias', System.getenv('SIGNING_KEY_ALIAS') ?: '')
+        props.setProperty('keyPassword', System.getenv('SIGNING_KEY_PASSWORD') ?: '')
+        return props
+    }
+    return null
+}()
+
+android {
+    namespace 'de.timowa.expenselog'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId "de.timowa.expenselog"
+        minSdk 26
+        targetSdk 36
+        // A new applicationId means a new Play listing with no release history, so the
+        // numbering restarts here. 23 / "1.4" belonged to the original listing.
+        versionCode 1
+        versionName "2.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // One source, both shapes the code needs: the manifest's OAuth redirect scheme wants the
+        // "db-" prefix, Auth.startOAuth2PKCE wants the key bare. Keeping them apart in two hand-
+        // edited files is what produced the 1/l transcription bug during Step 6 device testing.
+        resValue "string", "dropbox_key", "db-$dropboxAppKey"
+        resValue "string", "dropbox_app_key", dropboxAppKey
+    }
+    signingConfigs {
+        if (signing != null) {
+            release {
+                storeFile rootProject.file(signing.getProperty('storeFile'))
+                storePassword signing.getProperty('storePassword')
+                keyAlias signing.getProperty('keyAlias')
+                keyPassword signing.getProperty('keyPassword')
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            // R8, with the keep rules in proguard-rules.pro; every rule there says what breaks
+            // without it. shrinkResources needs minifyEnabled and drops the resources the shrunk
+            // code can no longer reach.
+            minifyEnabled true
+            shrinkResources true
+            // -optimize, not the plain file: AGP 9 refuses proguard-android.txt outright
+            // (android.r8.proguardAndroidTxt.disallowed defaults to true there).
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            if (signing != null) {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+    buildFeatures {
+        viewBinding true
+        // BuildConfig.DEBUG gates the debug logging; AGP 8 stops generating the class unless asked.
+        buildConfig true
+        // The two Dropbox key strings are resValue-generated from local.properties. AGP 9 turns
+        // this feature off by default, and a build with it off fails at configuration time with
+        // "defaultConfig contains custom resource values, but the feature is disabled".
+        resValues true
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    // Step 5 re-enabled ExpiredTargetSdkVersion and NotificationTrampoline, both of which were
+    // suppressed only because targetSdk was held at 29. ExpiredTargetSdkVersion resolved itself
+    // with the bump; NotificationTrampoline was a real defect and is fixed in ReminderReceiver.
+    // Nothing is suppressed here now -- keep it that way, or say why in this file.
+}
+
+dependencies {
+    // AppCompat 1.2.0 and Material 1.2.1 were pinned from Phase 1 to the sdk36 work because
+    // Material 1.5+ crashes at launch against a Theme.AppCompat app theme. The theme is a
+    // MaterialComponents Bridge now (values/styles.xml), which is what unpins them.
+    implementation 'androidx.appcompat:appcompat:1.8.0'
+    implementation 'com.google.android.material:material:1.14.0'
+
+    // Declared explicitly rather than taken transitively. Under AppCompat 1.2.0 these resolved to
+    // 2019 versions -- androidx.activity 1.0.0 predates OnBackInvokedCallback entirely, which is
+    // why the manifest carried enableOnBackInvokedCallback="false". MainActivity registers an
+    // OnBackPressedCallback now, so the versions here are load-bearing: do not let activity fall
+    // below 1.6.
+    implementation 'androidx.activity:activity:1.13.0'
+    implementation 'androidx.fragment:fragment:1.9.0'
+    // Held at 1.18.0 deliberately: core 1.19 requires compileSdk 37, and this project compiles
+    // against 36 because that is what its targetSdk and its Play requirement are. Raising
+    // compileSdk is its own change with its own device pass, not a dependency bump.
+    implementation 'androidx.core:core:1.18.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime:2.11.0'
+    implementation 'androidx.recyclerview:recyclerview:1.4.0'
+    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.3.0'
+    implementation 'androidx.viewpager:viewpager:1.1.0'
+
+    // The settings screens. Replaces android.preference, deprecated since API 29 and the reason
+    // SettingsActivity needed an AppCompatDelegate bolted onto a PreferenceActivity.
+    implementation 'androidx.preference:preference:1.2.1'
+
+    // Dagger
+    implementation 'com.google.dagger:dagger:2.60.1'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.60.1'
+
+    // Android plotter
+    // 1.5.11, not 1.6.0: that release requires compileSdk 37, which this project does not use.
+    implementation "com.androidplot:androidplot-core:1.5.11"
+
+    // Dropbox. 7.x, not the current 8.x line, which requires Java 21 -- this project is pinned
+    // to Java 17. Pinned to 7.0.0 rather than the newer 7.1.x patches simply because there is
+    // nothing to gain: 7.0.0's Auth/DbxCredential/DbxClientV2 API is identical to 7.1.1's
+    // (checked against both jars directly), so nothing below depends on the newer patch, and
+    // 7.0.0 is the version the Phase 2 and Phase 3 device passes actually exercised. Note that
+    // the *old* reason recorded here -- that 7.1.x declares minCompileSdk=36 in its AAR metadata
+    // and this project was pinned to compileSdk 35 -- stopped being true when compileSdk moved
+    // to 36. That barrier is gone; only "no reason to move" remains.
+    //
+    // dropbox-android-sdk is a separate artifact from 5.4.x
+    // onward and its Android code is Kotlin -- no Kotlin source is added to this repository, but
+    // a Kotlin runtime is now a dependency of it. androidx.collection (pulled in transitively via
+    // appcompat) already brings kotlin-stdlib 1.8.22, which is new enough to satisfy this and
+    // already has the old split kotlin-stdlib-jdk7/-jdk8 artifacts' classes merged into it, so
+    // those two are excluded here to avoid duplicate-class errors at the merge step.
+    implementation 'com.dropbox.core:dropbox-core-sdk:7.0.0'
+    implementation('com.dropbox.core:dropbox-android-sdk:7.0.0') {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk7'
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
+    }
+
+    testImplementation 'junit:junit:4.13.2'
+
+    // Instrumentation tests. These need a real SQLiteDatabase, so they run on a device or
+    // emulator rather than the JVM. See DBAdapterSchemaTest for why the database layer is the
+    // priority target, and IsolatedDatabaseContext for why they never touch the live database.
+    androidTestImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test:core:1.7.0'
+    androidTestImplementation 'androidx.test:runner:1.7.0'
+    // GrantPermissionRule, for the POST_NOTIFICATIONS grant ReminderNotificationTest needs
+    androidTestImplementation 'androidx.test:rules:1.7.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.3.0'
+}

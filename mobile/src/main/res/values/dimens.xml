@@ -1,0 +1,39 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="nav_header_height">100dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="general_padding">12dp</dimen>
+    <dimen name="fab_avoiding_margin">85dp</dimen>
+    <!-- The Records export mini FAB (40dp) over the + FAB (56dp): its end margin centres it on +,
+         and its bottom margin clears + when + is shown (16 + 56 + 16). LogTabsFragment picks one
+         of the two bottom margins per view, because + is hidden on Graph and Calendar. -->
+    <dimen name="fab_export_margin_end">24dp</dimen>
+    <dimen name="fab_export_margin_bottom_stacked">88dp</dimen>
+    <dimen name="fab_export_margin_bottom_alone">24dp</dimen>
+    <!-- Bottom padding for lists shown under both FABs: 88 + 40, plus room to read the last row. -->
+    <dimen name="fab_stack_avoiding_margin">150dp</dimen>
+    <!-- Bottom padding for the graph, whose x-axis labels sit where the lone export FAB does:
+         24 + 40, plus a gap. -->
+    <dimen name="fab_export_alone_avoiding_margin">72dp</dimen>
+    <dimen name="new_log_row_padding">14dp</dimen>
+    <dimen name="new_log_row_item_gap">24dp</dimen>
+
+    <!-- Plotting dimensions -->
+    <dimen name="range_label_font_size">16dp</dimen>
+    <dimen name="graph_line_width">3dp</dimen>
+    <dimen name="graph_vertex">3dp</dimen>
+    <dimen name="graph_vertex_circle_stroke">3dp</dimen>
+    <dimen name="graph_vertex_diameter">3dp</dimen>
+
+    <!--Calendar Values-->
+    <dimen name="calendar_min_cell_height">50dp</dimen>
+    <dimen name="calendar_min_cell_width">50dp</dimen>
+    <dimen name="calendar_item_spacing">6dp</dimen>
+
+    <dimen name="dialog_row_spacing">8dp</dimen>
+    <dimen name="expense_income_switch_large_text">28sp</dimen>
+    <dimen name="expense_income_switch_small_text">20sp</dimen>
+</resources>

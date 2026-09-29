@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The body of the Export Spreadsheet dialog: what to export (duration and period), a preview of
+    what that covers, and which tables to include.
+
+    A custom view rather than setMessage() + setSingleChoiceItems(), because an AlertDialog renders
+    either a message or a list: they share one content slot, so setting both means one of them
+    silently does not appear.
+
+    The period is shown and editable here because it used to be implicit: the export silently took
+    whatever page the records screen was on, so from a month view it exported one month and nothing
+    said so. SpreadsheetHelper seeds every control from that screen, so the defaults are unchanged.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="24dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="24dp">
+
+    <TextView
+        android:id="@+id/export_records_by_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:labelFor="@+id/export_period_mode"
+        android:text="@string/export_records_by"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/colorPrimary" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/bg_outlined_field">
+
+        <Spinner
+            android:id="@+id/export_period_mode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/colorPrimary" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/export_period_stepper"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_outlined_field"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/export_period_previous"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/export_previous_period"
+            android:src="@drawable/ic_chevron_left_24dp"
+            app:tint="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/export_period_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="?android:attr/textColorPrimary"
+            tools:text="Sep 2026" />
+
+        <ImageButton
+            android:id="@+id/export_period_next"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/export_next_period"
+            android:src="@drawable/ic_chevron_right_24dp"
+            app:tint="@color/colorPrimary" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/export_period_preview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:textColor="?android:attr/textColorSecondary"
+        android:textSize="12sp"
+        tools:text="2 records · 01/09/2026 – 30/09/2026" />
+
+    <!-- Shown only while a filter is active, because the filter narrows the export too and is
+         otherwise easy to forget. SpreadsheetHelper fills it with one chip per part of the filter,
+         mirroring the filter dialog's sections: the type (red for expenses, green for incomes, as
+         in the records list), then categories (amber, like the toolbar's active-filter icon),
+         then accounts (teal). The count of filtered records is in the preview line above. -->
+    <de.timowa.expenselog.WrapRowLayout
+        android:id="@+id/export_filter_chips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/export_include"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/colorPrimary" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/export_include_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:text="@string/export_list" />
+
+        <CheckBox
+            android:id="@+id/export_include_summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/export_summary" />
+    </LinearLayout>
+</LinearLayout>

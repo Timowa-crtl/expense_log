@@ -1,0 +1,6 @@
+<resources>
+    <!-- Style to make view take up screen on smaller deives and limit width on larger ones-->
+    <style name="max_layout_width">
+        <item name="android:layout_width">500dp</item>
+    </style>
+</resources>

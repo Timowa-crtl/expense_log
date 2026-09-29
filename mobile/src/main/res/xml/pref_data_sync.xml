@@ -1,0 +1,27 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:key="@string/pref_key_dropbox_sync_enable"
+        android:summary="@string/dropbox_sync_summary"
+        android:title="@string/dropbox_sync" />
+
+    <Preference
+        android:key="@string/pref_key_dropbox_do_backup"
+        android:title="@string/dropbox_do_backup" />
+    <Preference
+        android:key="@string/pref_key_dropbox_view_backups"
+        android:title="@string/dropbox_view_backups" />
+
+    <!-- This preference simply launches an intent when selected. Use this UI sparingly, per
+         design guidelines. -->
+    <Preference
+        android:key="@string/pref_key_backup_db"
+        android:title="@string/export_db" />
+    <Preference
+        android:key="@string/pref_key_import_db"
+        android:title="@string/import_db" />
+    <!--<intent android:action="android.settings.SYNC_SETTINGS" />-->
+
+
+</PreferenceScreen>

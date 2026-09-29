@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The + the FAB carries in app_bar_main.xml before a screen replaces it. Slightly heavier
+     than ic_action_new, as the PNG it replaces was. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp"
+    android:height="32dp"
+    android:viewportWidth="96"
+    android:viewportHeight="96">
+    <path
+        android:pathData="M48,16 L48,80 M16,48 L80,48"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="square"
+        android:strokeWidth="8" />
+</vector>

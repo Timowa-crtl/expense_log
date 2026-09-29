@@ -1,0 +1,50 @@
+<resources>
+
+    <!-- Base application theme.
+
+         The parent is a MaterialComponents *Bridge* theme, not a plain MaterialComponents one.
+         The bridge exists for exactly this case: an app styled against Theme.AppCompat that needs
+         a current Material Components library. Without it Material 1.5+ throws "The style on this
+         component requires your app theme to be Theme.MaterialComponents (or a descendant)" at
+         launch, which is what pinned this project to Material 1.2.1 for three phases. Moving to a
+         non-Bridge parent restyles every screen and needs its own screenshot pass. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar.Bridge">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <!-- PreferenceFragmentCompat throws without this: it reads the preference widget styles
+             from the theme rather than carrying its own. -->
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- the records list's selection bar replaces the toolbar rather than pushing it down -->
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <!-- also the theme of the selection bar, which AppCompat inflates from the toolbar's context -->
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
+        <item name="actionModeBackground">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
+
+    <style name="ExpenseIncomeSwitch" parent="Theme.MaterialComponents.Light.Bridge">
+        <!-- active thumb & track color (30% transparency) -->
+        <item name="colorControlActivated">@color/incomeColorLight</item>
+
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal">@color/expenseColorLight</item>
+
+    </style>
+
+    <!-- Style to make view take up screen on smaller deives and limit width on larger ones-->
+    <style name="max_layout_width">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+</resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The + on the main FloatingActionButton, set in code by four list screens. Traced from the
+    32dp PNG: a FAB centres its drawable at the drawable's own intrinsic size rather than scaling
+    it, so both the 32dp and the thin 6-unit stroke are what keep the button looking unchanged.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp"
+    android:height="32dp"
+    android:viewportWidth="96"
+    android:viewportHeight="96">
+    <path
+        android:pathData="M48,15 L48,81 M15,48 L81,48"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="square"
+        android:strokeWidth="6" />
+</vector>

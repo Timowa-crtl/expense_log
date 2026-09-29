@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The expanded marker beside each filter group. See ic_action_arrow_down. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp"
+    android:height="32dp"
+    android:viewportWidth="96"
+    android:viewportHeight="96">
+    <path
+        android:pathData="M34,50 L48,36 L62,50"
+        android:strokeAlpha="0.6"
+        android:strokeColor="#323232"
+        android:strokeLineCap="square"
+        android:strokeWidth="6" />
+</vector>

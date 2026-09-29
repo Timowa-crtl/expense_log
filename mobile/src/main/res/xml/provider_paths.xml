@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!--
+        The app's own directory on external storage: Android/data/<package>/files.
+        This is what FileHelper.getAppFilesDir returns, and it is the only
+        location the app writes to since Step 4. It needs no permission and scoped storage does
+        not restrict it.
+
+        The previous <external-path name="external_files" path="."/> mapped the entire SD card
+        root, which is both far wider than anything the app shares and unreachable once
+        requestLegacyExternalStorage stops being honoured past targetSdk 29.
+    -->
+    <external-files-path name="app_files" path="." />
+
+    <!--
+        getAppFilesDir falls back to context.getFilesDir() when getExternalFilesDir returns null,
+        which happens when external storage is not mounted. Without this entry that fallback was a
+        trap: FileProvider.getUriForFile threw "Failed to find configured root" for any file in it.
+        FileHelper.exportDB caught that into an error-333 message, but SpreadsheetHelper.sendFile
+        did not, so a CSV export crashed the app outright. Finding 3 of docs/history/REVIEW_FINDINGS.md.
+    -->
+    <files-path name="internal_files" path="." />
+</paths>

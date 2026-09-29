@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="false"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_margin="6dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:paddingRight="6dp"
+        android:scrollbarAlwaysDrawVerticalTrack="false"
+        android:scrollbarStyle="outsideOverlay">
+
+            <RadioGroup
+                android:id="@+id/radioGroup_sorting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:padding="10dp">
+
+                <RadioButton
+                    android:id="@+id/radioButton_date_low"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:padding="6dp"
+                    android:text="@string/sorting_date_low"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                <RadioButton
+                    android:id="@+id/radioButton_date_high"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:padding="6dp"
+                    android:text="@string/sorting_date_high"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                <RadioButton
+                    android:id="@+id/radioButton_amount_low"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:padding="6dp"
+                    android:text="@string/sorting_amount_low"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                <RadioButton
+                    android:id="@+id/radioButton_amount_high"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:padding="6dp"
+                    android:text="@string/sorting_amount_high"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            </RadioGroup>
+    </ScrollView>
+</LinearLayout>

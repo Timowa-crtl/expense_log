@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/general_padding">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:padding="18dp">
+
+            <ImageView
+                android:id="@+id/imageView_newIcon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:padding="8dp"
+                tools:ignore="ContentDescription" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_layout_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/editText_new_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/category_name"
+                    android:imeOptions="actionDone"
+                    android:inputType="textCapWords"
+                    android:paddingLeft="12dp"
+                    android:selectAllOnFocus="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:paddingBottom="32dp">
+
+            <TextView
+                android:id="@+id/textView_expense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="2"
+                android:gravity="center_vertical|right"
+                android:text="@string/expense"
+                android:textColor="@color/darkText"
+                android:textSize="22sp" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch_expense_income"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_weight="1"
+                android:checked="false"
+                android:gravity="center"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:theme="@style/ExpenseIncomeSwitch" />
+
+            <TextView
+                android:id="@+id/textView_income"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="2"
+                android:gravity="center_vertical|left"
+                android:text="@string/income"
+                android:textColor="@color/lightText"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <GridView
+            android:id="@+id/gridView_icons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:choiceMode="singleChoice"
+            android:clipToPadding="false"
+            android:columnWidth="60dp"
+            android:gravity="center"
+            android:horizontalSpacing="0dp"
+            android:numColumns="auto_fit"
+            android:paddingBottom="@dimen/fab_avoiding_margin"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="0dp" />
+    </LinearLayout>
+
+
+</RelativeLayout>

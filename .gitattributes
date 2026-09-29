@@ -1,0 +1,9 @@
+# All text is already LF in this repo; pin it so a Windows clone with
+# core.autocrlf=true cannot rewrite gradlew and break it on Unix.
+* text=auto eol=lf
+
+# Windows scripts must keep CRLF.
+*.bat text eol=crlf
+
+# Never line-ending-mangle the wrapper jar.
+*.jar binary
