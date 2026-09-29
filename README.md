@@ -1,4 +1,4 @@
-# Expense Log 2.0
+# Expense Log 2
 
 **The continuation of the beloved Android App Expense Log** 
 
