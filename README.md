@@ -2,7 +2,7 @@
 
 **The continuation of the beloved Android App Expense Log** 
 
-The (original app)[https://play.google.com/store/apps/details?id=arproductions.andrew.expenselog] is no longer maintained; this one picks up where it left off. Your records come with you.
+The [original app](https://play.google.com/store/apps/details?id=arproductions.andrew.expenselog) is no longer maintained; this one picks up where it left off. Your records come with you.
 
 <p>
   <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1_records.png" width="200" alt="Records list">
