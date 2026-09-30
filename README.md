@@ -1,6 +1,6 @@
 # Expense Log 2
 
-**The continuation of the beloved Android App Expense Log** 
+**The continuation of the beloved Android App Expense Log. Private, Open, Offline & Free.** 
 
 The [original app](https://play.google.com/store/apps/details?id=arproductions.andrew.expenselog) is no longer maintained; this one picks up where it left off. Your records come with you.
 
@@ -24,7 +24,7 @@ The [original app](https://play.google.com/store/apps/details?id=arproductions.a
 - `.edb` database export and import, plus automatic local backups
 - Optional Dropbox backup and sync between devices
 - Runs on Android 8.0 and newer, up to Android 16
-- Private and offline
+- Private, Open, Offline & Free
 
 ## Bring your data over
 
